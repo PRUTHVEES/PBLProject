@@ -44,8 +44,10 @@ public class LoginServlet extends HttpServlet {
                             response.sendRedirect("http://localhost:8080/PBLProject/AdminDashboard");
                         } else {
                             if(name != null) {
+                                HttpSession session=request.getSession();
                                 response.sendRedirect("http://localhost:8080/PBLProject/Dashboard?name=" + resultSet.getString("name"));
                             } else {
+                                HttpSession session=request.getSession();
                                 response.sendRedirect("http://localhost:8080/PBLProject/Dashboard?name=" + resultSet.getString("username"));
                             }
                         }
@@ -54,4 +56,16 @@ public class LoginServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }
