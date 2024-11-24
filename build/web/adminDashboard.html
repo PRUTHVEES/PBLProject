@@ -1,0 +1,144 @@
+
+
+        // Function to load feedback for the selected course
+        function loadFeedback(courseName, courseId, event) {
+            const feedbackList = document.getElementById("feedback-list");
+            const courseTitle = document.getElementById("course-title");
+            
+            // Update the course title
+            courseTitle.textContent = `Feedback for ${courseName} (${courseId})`;
+            
+            // Clear the current feedback list
+            feedbackList.innerHTML = "";
+            
+            // Fetch and display feedback
+            const feedbacks = feedbackData[courseId];
+            if (feedbacks && feedbacks.length > 0) {
+                feedbacks.forEach(({ username, feedback }) => {
+                    const feedbackItem = document.createElement("div");
+                    feedbackItem.className = "feedback-item";
+                    feedbackItem.innerHTML = `
+                        <img src="default-gmail.png" style="display:inline"><br><p>${feedback}</p>
+                    `;
+                    feedbackList.appendChild(feedbackItem);
+                });
+            } else {
+            feedbackList.innerHTML = `<img src="default-gmail.png" width="15" height="15" alt="userpic" style="display:inline-block"><br><p>No feedback available for this course.</p>`;
+            }
+
+            // Update active link in navbar
+            document.querySelectorAll(".navbar a").forEach(link => link.classList.remove("active"));
+            event.target.classList.add("active");
+        }
+		
+		window.onload = () => {
+    // Select the first menu item
+    const firstMenuItem = document.querySelector(".navbar a");
+
+    // Add the 'active' class to the first menu item
+    firstMenuItem.classList.add("active");
+
+    // Simulate a click to load feedback for the first course
+    loadFeedback('Course 1', '101', { target: firstMenuItem });
+};
+
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            overflow-x: auto;
+            background-color: #333;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            flex: none;
+            text-align: center;
+        }
+        .navbar a:hover {
+            background-color: #575757;
+        }
+        .navbar a.active {
+            background-color: #007bff; /* Blue background for active menu item */
+        }
+        /* Content area */
+        .content {
+            padding: 20px;
+        }
+        .feedback-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .feedback-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .feedback-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .feedback-header strong {
+            color: #333;
+            font-size: 16px;
+        }
+        .timestamp {
+            font-size: 12px;
+            color: #999;
+        }
+        .feedback-text {
+            margin: 0;
+            color: #333;
+            font-size: 14px;
+        }
+        .feedback-item:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+	
+</head>
+<body>
+    <!-- Horizontal Navbar -->
+    <div class="navbar">
+        <a href="#" class="active" onclick="loadFeedback('Course 1', '101', event)">Mathematics (C101)</a>
+        <a href="#" onclick="loadFeedback('Course 2', '102', event)">Phsyics (C102)</a>
+        <a href="#" onclick="loadFeedback('Course 3', '103', event)">Chemistry (C103)</a>
+    </div>
+
+    <!-- Content area -->
+    <div class="content">
+        <div class="feedback-container">
+            <h2 id="course-title">Select a course to view feedback</h2>
+            <div id="feedback-list">
+                <!-- Feedback items will be dynamically populated here -->
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>
